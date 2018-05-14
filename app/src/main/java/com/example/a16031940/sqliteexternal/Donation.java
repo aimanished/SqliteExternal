@@ -1,12 +1,29 @@
 package com.example.a16031940.sqliteexternal;
 
+import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.Toast;
+
+import com.paypal.android.sdk.payments.PayPalConfiguration;
+import com.paypal.android.sdk.payments.PayPalPayment;
+import com.paypal.android.sdk.payments.PayPalService;
+import com.paypal.android.sdk.payments.PaymentActivity;
+import com.paypal.android.sdk.payments.PaymentConfirmation;
+
+import org.json.JSONException;
+
+import java.math.BigDecimal;
 
 
 /**
@@ -22,6 +39,10 @@ public class Donation extends Fragment {
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
+
+    PayPalConfiguration config;
+
+
 
     // TODO: Rename and change types of parameters
     private String mParam1;
@@ -99,5 +120,47 @@ public class Donation extends Fragment {
     public interface OnFragmentInteractionListener {
         // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        Button btn  = getView().findViewById(R.id.buttonDonate);
+
+
+        config = new PayPalConfiguration()
+                .environment(PayPalConfiguration.ENVIRONMENT_NO_NETWORK).clientId("ASy2-pIlL7E11WDgFJ_dW808J76DMoD6RVrtuhEL9Ym79t0yYsoGVHF9bwKfLb7IewFie0DRFIKU102F");
+        btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                paymentClick();
+            }
+        });
+    }
+    public void paymentClick(){
+        PayPalPayment payment = new PayPalPayment(new BigDecimal(10),"SGD","Payment for donation!",PayPalPayment.PAYMENT_INTENT_SALE);
+
+        Intent intent = new Intent(getActivity(), PaymentActivity.class);
+        intent.putExtra(PayPalService.EXTRA_PAYPAL_CONFIGURATION,config);
+        intent.putExtra(PaymentActivity.EXTRA_PAYMENT,payment);
+        startActivityForResult(intent,0);
+    }
+
+    protected void onActivityResult(int requestCode, Intent data) throws JSONException {
+        if(requestCode == Activity.RESULT_OK){
+            PaymentConfirmation confirm = data.getParcelableExtra(PaymentActivity.EXTRA_RESULT_CONFIRMATION);
+            if(confirm != null){
+                try{
+                    Log.i("paymentExample",confirm.toJSONObject().toString(4));
+                }catch(JSONException e){
+                    Log.e("paymentExample","an extremely unlikely failure occured",e);
+                }
+            }
+        }
+        else if(requestCode == Activity.RESULT_CANCELED){
+            Log.i("paymentExample","The user canceleed!");
+        }
+        else if(requestCode == PaymentActivity.RESULT_EXTRAS_INVALID){
+            Log.i("paymentExample","payment is invalid");
+        }
     }
 }
