@@ -13,6 +13,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.paypal.android.sdk.payments.PayPalConfiguration;
@@ -125,19 +127,33 @@ public class Donation extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         Button btn  = getView().findViewById(R.id.buttonDonate);
+        Button feedback = getView().findViewById(R.id.Feedback);
 
+        feedback.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(Intent.ACTION_VIEW,Uri.parse("http://www.google.com"));
+                startActivity(intent);
 
+            }
+        });
         config = new PayPalConfiguration()
                 .environment(PayPalConfiguration.ENVIRONMENT_NO_NETWORK).clientId("ASy2-pIlL7E11WDgFJ_dW808J76DMoD6RVrtuhEL9Ym79t0yYsoGVHF9bwKfLb7IewFie0DRFIKU102F");
         btn.setOnClickListener(new View.OnClickListener() {
+            final EditText donateText = getView().findViewById(R.id.donateText);
+            Double dona = Double.parseDouble(donateText.getText().toString());
             @Override
             public void onClick(View v) {
-                paymentClick();
+                if(donateText.getText().toString().trim().length()<0){
+                    donateText.setError("Please enter amount!");
+                }else{
+                    paymentClick(dona);
+                }
             }
         });
     }
-    public void paymentClick(){
-        PayPalPayment payment = new PayPalPayment(new BigDecimal(10),"SGD","Payment for donation!",PayPalPayment.PAYMENT_INTENT_SALE);
+    public void paymentClick(Double number){
+        PayPalPayment payment = new PayPalPayment(new BigDecimal(number),"SGD","Payment for donation!",PayPalPayment.PAYMENT_INTENT_SALE);
 
         Intent intent = new Intent(getActivity(), PaymentActivity.class);
         intent.putExtra(PayPalService.EXTRA_PAYPAL_CONFIGURATION,config);
@@ -163,4 +179,5 @@ public class Donation extends Fragment {
             Log.i("paymentExample","payment is invalid");
         }
     }
+    
 }

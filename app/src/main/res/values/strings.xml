@@ -6,4 +6,8 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
 
+    <string name="donate">
+        If you like this application and want more contents , do donate for more updates and information! You can also request any feedback or any suggestions on the next information to be brought for you! Thank you for your support!
+    </string>
+
 </resources>
