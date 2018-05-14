@@ -54,6 +54,10 @@ public class Home extends AppCompatActivity {
             case R.id.formation:
                 fragmentClass = Formation.class;
                 break;
+            case R.id.donation:
+                fragmentClass = Donation.class;
+                break;
+
             default:
                 fragmentClass = settings.class;
         }
