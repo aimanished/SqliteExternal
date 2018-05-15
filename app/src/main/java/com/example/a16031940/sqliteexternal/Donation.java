@@ -49,7 +49,7 @@ public class Donation extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
-
+    EditText donateText;
     private OnFragmentInteractionListener mListener;
 
     public Donation() {
@@ -81,13 +81,20 @@ public class Donation extends Fragment {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
+
+
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_donation, container, false);
+
+        View v = inflater.inflate(R.layout.fragment_donation, container, false);
+
+        donateText = v.findViewById(R.id.donateText);
+
+        return v;
     }
 
     // TODO: Rename method, update argument and hook method into UI event
@@ -124,6 +131,8 @@ public class Donation extends Fragment {
         void onFragmentInteraction(Uri uri);
     }
 
+
+
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         Button btn  = getView().findViewById(R.id.buttonDonate);
@@ -139,20 +148,27 @@ public class Donation extends Fragment {
         });
         config = new PayPalConfiguration()
                 .environment(PayPalConfiguration.ENVIRONMENT_NO_NETWORK).clientId("ASy2-pIlL7E11WDgFJ_dW808J76DMoD6RVrtuhEL9Ym79t0yYsoGVHF9bwKfLb7IewFie0DRFIKU102F");
+
+
         btn.setOnClickListener(new View.OnClickListener() {
-            final EditText donateText = getView().findViewById(R.id.donateText);
-            Double dona = Double.parseDouble(donateText.getText().toString());
+
+
             @Override
             public void onClick(View v) {
+
+                Double dona = Double.parseDouble(donateText.getText().toString());
+//                Toast.makeText(getActivity(),String.valueOf(dona),Toast.LENGTH_SHORT).show();
                 if(donateText.getText().toString().trim().length()<0){
                     donateText.setError("Please enter amount!");
                 }else{
+                    Log.i("see here" , "fdas " +  dona);
                     paymentClick(dona);
-                }
+            }
             }
         });
     }
     public void paymentClick(Double number){
+
         PayPalPayment payment = new PayPalPayment(new BigDecimal(number),"SGD","Payment for donation!",PayPalPayment.PAYMENT_INTENT_SALE);
 
         Intent intent = new Intent(getActivity(), PaymentActivity.class);
@@ -179,5 +195,5 @@ public class Donation extends Fragment {
             Log.i("paymentExample","payment is invalid");
         }
     }
-    
+
 }

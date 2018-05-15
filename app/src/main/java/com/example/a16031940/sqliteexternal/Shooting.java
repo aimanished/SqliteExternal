@@ -3,7 +3,11 @@ package com.example.a16031940.sqliteexternal;
 import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
+import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
+import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -99,5 +103,19 @@ public class Shooting extends Fragment {
     public interface OnFragmentInteractionListener {
         // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
+//        // Get the ViewPager and set it's PagerAdapter so that it can display items
+//        ViewPager viewPager = getView().findViewById(R.id.viewpager);
+//        viewPager.setAdapter(new SampleFragmentPagerAdapter(getSupportFragmentManager(),
+//                getActivity()));
+//
+//        // Give the TabLayout the ViewPager
+//        TabLayout tabLayout = getView().findViewById(R.id.sliding_tabs);
+//        tabLayout.setupWithViewPager(viewPager);
     }
 }
