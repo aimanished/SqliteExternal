@@ -80,8 +80,8 @@ public class Shooting extends Fragment {
         viewPager.setAdapter(new SampleFragmentPagerAdapter(getActivity().getSupportFragmentManager(),getActivity()));
 
         // Give the TabLayout the ViewPager
-        TabLayout tabLayout = v.findViewById(R.id.sliding_tabs);
-        tabLayout.setupWithViewPager(viewPager);
+//        TabLayout tabLayout = v.findViewById(R.id.sliding_tabs);
+//        tabLayout.setupWithViewPager(viewPager);
         return v;
     }
 

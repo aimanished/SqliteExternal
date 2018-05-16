@@ -36,4 +36,8 @@ dependencies {
 
     implementation "com.android.support:appcompat-v7:${supportLibVersion}"
     implementation "com.android.support:design:${supportLibVersion}"
+
+
+    // lib
+    implementation "com.steelkiwi:indicator-view:1.0.0"
 }

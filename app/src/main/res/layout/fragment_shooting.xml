@@ -5,12 +5,12 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <android.support.design.widget.TabLayout
-        android:id="@+id/sliding_tabs"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:tabMode="fixed"
-        android:background="@color/colorPrimaryDark"/>
+    <!--<android.support.design.widget.TabLayout-->
+        <!--android:id="@+id/sliding_tabs"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--app:tabMode="fixed"-->
+        <!--android:background="@color/colorPrimaryDark"/>-->
 
     <android.support.v4.view.ViewPager
         android:id="@+id/viewpager"
@@ -18,5 +18,22 @@
         android:layout_height="0dp"
         android:layout_weight="1"
         android:background="@android:color/white" />
+
+    <steelkiwi.com.library.view.IndicatorView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_allignParentBottom="true"
+        android:id="@+id/indicatorView"
+        app:iv_bar_color="@android:color/black"
+        app:iv_corner_radius="4dp"
+        app:iv_idle_color="#999999"
+        app:iv_select_color="#666666"
+        app:iv_size="40dp"
+        app:iv_text_color="@android:color/black"
+        app:iv_text_size="12sp"
+        app:iv_action="hung_down"
+        app:iv_item_amount="3"
+        />
+
 
 </LinearLayout>
