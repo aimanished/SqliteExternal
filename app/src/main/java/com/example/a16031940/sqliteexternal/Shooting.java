@@ -1,5 +1,6 @@
 package com.example.a16031940.sqliteexternal;
 
+import android.app.Activity;
 import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
@@ -7,6 +8,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentActivity;
 import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -26,6 +28,7 @@ public class Shooting extends Fragment {
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
+    private FragmentActivity myContext;
 
     // TODO: Rename and change types of parameters
     private String mParam1;
@@ -62,13 +65,24 @@ public class Shooting extends Fragment {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
+        // Get the ViewPager and set it's PagerAdapter so that it can display items
+
+
+
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_shooting, container, false);
+        View v = inflater.inflate(R.layout.fragment_shooting, container, false);
+        ViewPager viewPager = v.findViewById(R.id.viewpager);
+        viewPager.setAdapter(new SampleFragmentPagerAdapter(getActivity().getSupportFragmentManager(),getActivity()));
+
+        // Give the TabLayout the ViewPager
+        TabLayout tabLayout = v.findViewById(R.id.sliding_tabs);
+        tabLayout.setupWithViewPager(viewPager);
+        return v;
     }
 
     // TODO: Rename method, update argument and hook method into UI event
@@ -109,13 +123,8 @@ public class Shooting extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-//        // Get the ViewPager and set it's PagerAdapter so that it can display items
-//        ViewPager viewPager = getView().findViewById(R.id.viewpager);
-//        viewPager.setAdapter(new SampleFragmentPagerAdapter(getSupportFragmentManager(),
-//                getActivity()));
-//
-//        // Give the TabLayout the ViewPager
-//        TabLayout tabLayout = getView().findViewById(R.id.sliding_tabs);
-//        tabLayout.setupWithViewPager(viewPager);
+
     }
+
+
 }
